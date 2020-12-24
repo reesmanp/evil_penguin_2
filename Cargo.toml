@@ -1,0 +1,22 @@
+[package]
+name = "evil_penguin_2"
+version = "0.1.0"
+authors = ["Paul Reesman <paul.r.reesman@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+const-concat = { git = "https://github.com/reesmanp/const-concat" }
+log = { version = "0.4.8", features = ["max_level_debug", "release_max_level_warn"] }
+rand = "0.7.3"
+serde = { version = "1.0.113", features = ["derive"] }
+
+
+[target.'cfg(target_os = "windows")'.dependencies.amethyst]
+version = "^0.15.0"
+default-features = false
+features = ["vulkan"]
+
+[target.'cfg(target_os = "macos")'.dependencies.amethyst]
+version = "^0.15.0"
+default-features = false
+features = ["metal"]

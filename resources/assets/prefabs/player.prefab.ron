@@ -1,0 +1,10 @@
+#![enable(implicit_some)]
+Prefab(
+    entities: [
+        PrefabEntity(
+            data: PlayerPrefabData(
+                battery: BatteryComponent(10)
+            )
+        )
+    ]
+)

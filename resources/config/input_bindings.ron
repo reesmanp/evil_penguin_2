@@ -1,0 +1,17 @@
+(
+    axes: {
+        "move-x": Emulated(
+            pos: Key(D),
+            neg: Key(A)
+        ),
+        "move-z": Emulated(
+            pos: Key(S),
+            neg: Key(W)
+        )
+    },
+    actions: {
+        "flashlight": [ [ Mouse(Left) ] ],
+        "interact": [ [ Key(E) ] ],
+        "run": [ [ Key(LShift) ] ]
+    }
+)
