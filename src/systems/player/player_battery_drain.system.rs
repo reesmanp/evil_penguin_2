@@ -34,18 +34,16 @@ impl<'a> System<'a> for PlayerBatteryDrainSystem {
                 if flashlight.intensity > 0.0 {
                     self.time_since_last_battery_tick += time.delta_seconds();
 
+                    // Let's us control how fast the battery drains in seconds
                     if self.time_since_last_battery_tick > FLASHLIGHT_BATTERY_DRAIN_SPEED {
+                        // Resets the counter
                         self.time_since_last_battery_tick -= FLASHLIGHT_BATTERY_DRAIN_SPEED;
                         battery.0 -= 1;
 
                         debug!("Flashlight Battery Level: {}", battery.0);
 
-                        if battery.0 <= FLASHLIGHT_BATTERY_AMOUNT / 2 {
-                            flashlight.intensity = FLASHLIGHT_DEFAULT_INTENSITY / 2.0;
-
-                            debug!("Flashlight Battery Level: Half");
-                            debug!("Flashlight Intensity Reduced");
-                        }
+                        let battery_level = battery.0 as f32 / battery.1 as f32;
+                        flashlight.intensity = FLASHLIGHT_DEFAULT_INTENSITY * battery_level;
                     }
                 }
             }

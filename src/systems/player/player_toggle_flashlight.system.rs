@@ -38,11 +38,8 @@ impl<'a> System<'a> for PlayerToggleFlashlightSystem {
                     if battery.0 > 0 {
                         if let Some(toggle) = input.action_is_down("flashlight") {
                             if flashlight.intensity == 0.0 && toggle {
-                                if battery.0 > FLASHLIGHT_BATTERY_AMOUNT / 2 {
-                                    flashlight.intensity = FLASHLIGHT_DEFAULT_INTENSITY;
-                                } else {
-                                    flashlight.intensity = FLASHLIGHT_DEFAULT_INTENSITY / 2.0;
-                                }
+                                let battery_level = battery.0 as f32 / battery.1 as f32;
+                                flashlight.intensity = FLASHLIGHT_DEFAULT_INTENSITY * battery_level;
                                 debug!("Flashlight Toggled On");
                             } else if flashlight.intensity > 0.0 && toggle {
                                 flashlight.intensity = 0.0;

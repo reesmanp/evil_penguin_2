@@ -10,4 +10,4 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Copy, Component, Debug, Deserialize, PrefabData, Serialize)]
 #[storage(HashMapStorage)]
 #[prefab(Component)]
-pub struct BatteryComponent(pub usize);
+pub struct BatteryComponent(pub usize, pub usize);

@@ -47,6 +47,7 @@ impl<'a, 'b> SimpleState for RunState<'a, 'b> {
         self.initialize_dispatcher(world);
         self.create_player_entity(world);
         self.create_test_sphere(world);
+        self.create_ground(world);
         self.create_resources(world);
 
         info!("Done: Run State");
@@ -149,14 +150,42 @@ impl<'a, 'b> RunState<'a, 'b> {
                 },
                 (),
             )
-        },
-        );
+        });
 
         let mut transform = Transform::default();
         transform.set_translation_xyz(0.0, 0.0, -7.0);
         world.create_entity().with(mesh).with(material).with(transform).build();
 
         info!("Done: Test Sphere Entity");
+    }
+
+    // TODO: find out why this is not rendering
+    fn create_ground(&self, world: &mut World) {
+        info!("Creating: Ground");
+
+        let mesh = world.exec(|loader: AssetLoaderSystemData<'_, Mesh>| {
+            loader.load_from_data(
+                Shape::Plane(Some((100, 100)))
+                    .generate::<(Vec<Position>, Vec<Normal>, Vec<Tangent>, Vec<TexCoord>)>(None)
+                    .into(),
+                (),
+            )
+        });
+        let material_defaults = world.read_resource::<MaterialDefaults>().0.clone();
+        let material = world.exec(|loader: AssetLoaderSystemData<'_, Material>| {
+            loader.load_from_data(
+                Material {
+                    ..material_defaults
+                },
+                (),
+            )
+        });
+
+        let mut transform = Transform::default();
+        transform.set_translation_xyz(0.0, -10.0, 0.0);
+        world.create_entity().with(mesh).with(material).with(transform).build();
+
+        info!("Done: Ground");
     }
 
     fn create_resources(&mut self, world: &mut World) {

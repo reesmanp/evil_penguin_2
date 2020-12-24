@@ -3,7 +3,7 @@ Prefab(
     entities: [
         PrefabEntity(
             data: PlayerPrefabData(
-                battery: BatteryComponent(10)
+                battery: BatteryComponent(100, 100)
             )
         )
     ]
